@@ -2,7 +2,72 @@
 
 // Function to show a message when button is clicked
 function showMessage() {
-    alert('Trang này sẽ tự huỷ sau 5 giây!');
+    alert('Trang Web này sẽ nổ tung sau 5 giây');
+    
+    // Add popping effect after 5 seconds
+    setTimeout(() => {
+        const button = document.querySelector('.hero button');
+        if (button) {
+            // Add pop animation class
+            button.classList.add('pop-effect');
+            
+            // Create explosion effect
+            createExplosionEffect(button);
+            
+            // Remove the class after animation completes
+            setTimeout(() => {
+                button.classList.remove('pop-effect');
+            }, 1000);
+        }
+    }, 5000);
+}
+
+// Create explosion effect function
+function createExplosionEffect(element) {
+    const rect = element.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    // Create multiple particles for explosion effect
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'explosion-particle';
+        particle.style.position = 'fixed';
+        particle.style.left = centerX + 'px';
+        particle.style.top = centerY + 'px';
+        particle.style.width = '8px';
+        particle.style.height = '8px';
+        particle.style.backgroundColor = '#667eea';
+        particle.style.borderRadius = '50%';
+        particle.style.pointerEvents = 'none';
+        particle.style.zIndex = '9999';
+        
+        // Random direction and distance
+        const angle = (360 / 20) * i;
+        const distance = 100 + Math.random() * 50;
+        const radian = (angle * Math.PI) / 180;
+        const endX = centerX + Math.cos(radian) * distance;
+        const endY = centerY + Math.sin(radian) * distance;
+        
+        particle.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        
+        document.body.appendChild(particle);
+        
+        // Animate particle
+        setTimeout(() => {
+            particle.style.left = endX + 'px';
+            particle.style.top = endY + 'px';
+            particle.style.opacity = '0';
+            particle.style.transform = 'scale(0)';
+        }, 10);
+        
+        // Remove particle after animation
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+            }
+        }, 1000);
+    }
 }
 
 // Smooth scrolling for navigation links
