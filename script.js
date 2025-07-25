@@ -2,7 +2,7 @@
 
 // Function to show a message when button is clicked
 function showMessage() {
-    alert('Hello! Welcome to my website. Thanks for clicking the button!');
+    alert('Trang này sẽ tự huỷ sau 5 giây!');
 }
 
 // Smooth scrolling for navigation links
